@@ -74,6 +74,7 @@
 
 <script>
 import ProductCard from '../components/ProductCard.vue'
+import cortisImage from '../assets/products/Cortis.png'
 
 export default {
   name: 'ProductsView',
@@ -82,6 +83,7 @@ export default {
   },
   data() {
     return {
+      cortisImage,
       selectedCategory: 'all',
       selectedPrice: 'all',
       sortBy: 'featured',
@@ -91,7 +93,7 @@ export default {
           name: 'ABRA Puppy T-Shirt',
           price: 285.00,
           category: 'mens',
-          image: 'src/assets/products/Cortis.png',
+          image: cortisImage,
           member: 'Martin',
           description: 'Featured in Martin\'s outfit, this set includes the ABRA Puppy T-Shirt.',
           sustainability: 'Made with sustainable materials and eco-friendly processes.',
@@ -102,7 +104,7 @@ export default {
           name: 'LADO BOKUCHAVA Okinawa Belt',
           price: 365.00,
           category: 'accessories',
-          image: 'src/assets/products/Cortis.png',
+          image: cortisImage,
           member: 'Martin',
           description: 'Stylish belt from LADO BOKUCHAVA collection, featured in Martin\'s outfit.',
           sustainability: 'Crafted with sustainable materials for longevity.',
@@ -113,7 +115,7 @@ export default {
           name: 'KODY PHILLIPS Rip Van Kody Waxed Black',
           price: 398.00,
           category: 'mens',
-          image: 'src/assets/products/Cortis.png',
+          image: cortisImage,
           member: 'Martin',
           description: 'Waxed black piece from KODY PHILLIPS Rip Van Kody collection, part of Martin\'s featured outfit.',
           sustainability: 'Made with sustainable materials and eco-friendly processes.',
@@ -124,7 +126,7 @@ export default {
           name: 'CONNER IVES Grey Reconstituted Floral Swarovski Hoodie',
           price: 293,
           category: 'mens',
-          image: 'src/assets/products/Cortis.png',
+          image: cortisImage,
           member: 'Seonghyeon',
           description: 'Stylish hoodie from CONNER IVES collection, featured in Seonghyeon\'s outfit.',
           sustainability: 'Crafted with sustainable materials for a more sustainable future.',
@@ -135,7 +137,7 @@ export default {
           name: 'PDF CHANNEL The Boy TShirt',
           price: 376,
           category: 'mens',
-          image: 'src/assets/products/Cortis.png',
+          image: cortisImage,
           member: 'James',
           description: 'Comfortable oversized t-shirt for casual days.',
           sustainability: 'Made from sustainable cotton blend with reduced environmental impact.',
@@ -146,7 +148,7 @@ export default {
           name: 'MAISON SPECIAL Multi Way Button Polo Shirt',
           price: 114,
           category: 'mens',
-          image: 'src/assets/products/Cortis.png',
+          image: cortisImage,
           member: 'Juhoon',
           description: 'Polo shirt with multiple ways to button up for a versatile look.',
           sustainability: 'Designed with sustainable materials and timeless style for longevity.',
@@ -157,7 +159,7 @@ export default {
           name: 'MAISON SPECIAL Multi Way Button Polo Shirt',
           price: 36,
           category: 'mens',
-          image: 'src/assets/products/Cortis.png',
+          image: cortisImage,
           member: 'Keonho',
           description: 'STUSSY Vintage White Shirt',
           sustainability: 'Made with sustainable materials and timeless style for longevity.',

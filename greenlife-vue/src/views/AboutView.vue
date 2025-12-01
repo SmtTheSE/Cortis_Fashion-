@@ -16,7 +16,7 @@
             <p>Our team of designers, stylists, and K-fashion experts work together to create collections that capture the essence of modern K-pop aesthetics while remaining wearable and accessible for everyday fashion lovers.</p>
           </div>
           <div class="content-image">
-            <img src="../assets/about-image.jpg" alt="Fashion! Team">
+            <img :src="aboutImage" alt="Fashion! Team">
           </div>
         </div>
       </div>
@@ -62,10 +62,16 @@
 </template>
 
 <script>
+import aboutImage from '../assets/about-image.jpg';
+import team1Image from '../assets/team1.jpg';
+import team2Image from '../assets/team2.jpg';
+import team3Image from '../assets/team3.jpg';
+
 export default {
   name: 'AboutView',
   data() {
     return {
+      aboutImage,
       values: [
         {
           icon: 'fas fa-infinity',
@@ -90,19 +96,19 @@ export default {
       ],
       team: [
         {
-          image: '../assets/team1.jpg',
+          image: team1Image,
           name: 'Sitt Min Thar',
           role: 'Founder & CEO',
           bio: 'Fashion visionary and K-pop enthusiast with a passion for bringing Cortis-inspired style to fashion lovers worldwide.'
         },
         {
-          image: '../assets/team2.jpg',
+          image: team2Image,
           name: 'Honey Thet Htar Zin',
           role: 'Head of Design',
           bio: 'Creative designer specializing in translating K-pop aesthetics into wearable fashion pieces.'
         },
         {
-          image: '../assets/team3.jpg',
+          image: team3Image,
           name: 'Phone Myat Min',
           role: 'Community Manager',
           bio: 'K-pop superfan dedicated to building our amazing community of fashion lovers.'

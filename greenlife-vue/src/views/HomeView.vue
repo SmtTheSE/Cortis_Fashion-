@@ -106,6 +106,7 @@ import FeatureCard from '../components/FeatureCard.vue'
 import TransformationCard from '../components/TransformationCard.vue'
 import TestimonialCard from '../components/TestimonialCard.vue'
 import { gsap } from 'gsap'
+import heroImage from '../assets/gp.png'
 
 export default {
   name: 'HomeView',
@@ -113,6 +114,11 @@ export default {
     FeatureCard,
     TransformationCard,
     TestimonialCard
+  },
+  data() {
+    return {
+      heroImage
+    }
   },
   data() {
     return {
@@ -225,7 +231,6 @@ export default {
 <style scoped>
 /* Hero Section */
 .hero {
-  background: url('../assets/gp.png');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -234,6 +239,19 @@ export default {
   color: white;
   text-align: center;
   margin-top: 0;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../assets/gp.png');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
 }
 
 .hero-content {

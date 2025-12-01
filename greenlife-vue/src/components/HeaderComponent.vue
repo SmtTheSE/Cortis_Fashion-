@@ -2,7 +2,7 @@
   <header>
     <div class="container">
       <div class="logo">
-        <img src="../assets/download.png" alt="Logo" class="logo-image">
+        <img :src="logoImage" alt="Logo" class="logo-image">
         <h2>Fashion!</h2>
       </div>
       <nav>
@@ -75,10 +75,13 @@
 </template>
 
 <script>
+import logoImage from '../assets/download.png';
+
 export default {
   name: 'HeaderComponent',
   data() {
     return {
+      logoImage,
       showLoginModal: false,
       showSignupModal: false,
       loginForm: {
