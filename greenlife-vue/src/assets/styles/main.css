@@ -1,0 +1,319 @@
+/* Base Styles - Cortis-inspired color palette */
+:root {
+  /* Cortis Color Palette */
+  --primary-color: #FF006E; /* Hot Pink - Cortis signature color */
+  --primary-dark: #CC0056; 
+  --secondary-color: #8338EC; /* Vibrant Purple */
+  --accent-color: #3A86FF; /* Bright Blue */
+  --light-color: #f8f9fa;
+  --dark-color: #000000; /* Black for modern contrast */
+  --success-color: #28a745;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(131, 56, 236, 0.15);
+  --box-shadow-lg: 0 10px 20px rgba(131, 56, 236, 0.2);
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--dark-color);
+  background-color: #fff;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--gray-700);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  box-shadow: var(--box-shadow);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(45deg, var(--primary-dark), var(--secondary-color));
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-lg);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-outline:hover {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow);
+}
+
+/* Animations */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(100%);
+}
+
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+
+/* Sections */
+section {
+  padding: 5rem 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  color: var(--dark-color);
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-header p {
+  color: var(--gray-600);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Responsive Design Utilities */
+@media (max-width: 1200px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  
+  section {
+    padding: 4rem 0;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    width: 95%;
+    padding: 0 10px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+  }
+  
+  section {
+    padding: 3rem 0;
+  }
+  
+  .section-header {
+    margin-bottom: 2rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 0.9rem;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+  }
+  
+  h3 {
+    font-size: 1.3rem;
+  }
+  
+  section {
+    padding: 2.5rem 0;
+  }
+  
+  .section-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.6rem;
+  }
+  
+  .section-header p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 0.85rem;
+  }
+  
+  .container {
+    width: 100%;
+    padding: 0 15px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.4rem;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+  }
+  
+  section {
+    padding: 2rem 0;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra small devices (phones, less than 480px) */
+@media (max-width: 480px) {
+  body {
+    font-size: 0.8rem;
+  }
+  
+  h1 {
+    font-size: 1.3rem;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+  }
+  
+  h3 {
+    font-size: 1.1rem;
+  }
+  
+  section {
+    padding: 1.5rem 0;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .section-header p {
+    font-size: 0.9rem;
+  }
+}
