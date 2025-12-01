@@ -69,6 +69,125 @@
         </div>
       </div>
     </section>
+
+    <!-- Subscription Section -->
+    <section class="subscription-section">
+      <div class="container">
+        <div class="subscription-content">
+          <h2>Get Premium Access</h2>
+          <p>Subscribe to our premium plan and get early access to new products, stock notifications, and exclusive decision-making power!</p>
+          
+          <div class="subscription-plan">
+            <div class="plan-header">
+              <h3>Premium Plan</h3>
+              <div class="plan-price">$9.99<span>/month</span></div>
+            </div>
+            
+            <ul class="plan-features">
+              <li><i class="fas fa-bell"></i> Early access to new products</li>
+              <li><i class="fas fa-bell"></i> Stock notifications</li>
+              <li><i class="fas fa-bell"></i> Exclusive decision-making power</li>
+              <li><i class="fas fa-bell"></i> Priority customer support</li>
+            </ul>
+            
+            <button class="btn btn-primary" @click="subscribeToPlan">
+              Subscribe Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Subscription Modal -->
+    <transition name="fade">
+      <div class="modal" v-if="showSubscriptionModal">
+        <div class="modal-content subscription-modal">
+          <span class="close" @click="closeSubscriptionModal">&times;</span>
+          <h2>Premium Subscription</h2>
+          <div class="subscription-summary">
+            <div class="subscription-details">
+              <h3>Premium Plan</h3>
+              <p class="price">$9.99<span>/month</span></p>
+            </div>
+          </div>
+          
+          <form @submit.prevent="processSubscription" class="payment-form">
+            <div class="form-group">
+              <label for="subCardNumber">Card Number</label>
+              <div class="input-with-icon">
+                <i class="fas fa-credit-card"></i>
+                <input 
+                  type="text" 
+                  id="subCardNumber" 
+                  v-model="subscriptionInfo.cardNumber" 
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="19"
+                  @input="formatCardNumberSub"
+                  required
+                >
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group half-width">
+                <label for="subExpiryDate">Expiry Date</label>
+                <div class="input-with-icon">
+                  <i class="fas fa-calendar-alt"></i>
+                  <input 
+                    type="text" 
+                    id="subExpiryDate" 
+                    v-model="subscriptionInfo.expiryDate" 
+                    placeholder="MM/YY"
+                    maxlength="5"
+                    @input="formatExpiryDateSub"
+                    required
+                  >
+                </div>
+              </div>
+              
+              <div class="form-group half-width">
+                <label for="subCvv">CVV</label>
+                <div class="input-with-icon">
+                  <i class="fas fa-lock"></i>
+                  <input 
+                    type="text" 
+                    id="subCvv" 
+                    v-model="subscriptionInfo.cvv" 
+                    placeholder="123"
+                    maxlength="4"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="subCardName">Cardholder Name</label>
+              <div class="input-with-icon">
+                <i class="fas fa-user"></i>
+                <input 
+                  type="text" 
+                  id="subCardName" 
+                  v-model="subscriptionInfo.cardName" 
+                  placeholder="John Doe"
+                  required
+                >
+              </div>
+            </div>
+            
+            <div class="total-amount">
+              <span>Total:</span>
+              <span class="amount">$9.99</span>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block" :disabled="isProcessingSubscription">
+              <span v-if="!isProcessingSubscription">Subscribe Now</span>
+              <span v-else><i class="fas fa-spinner fa-spin"></i> Processing...</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -87,6 +206,14 @@ export default {
       selectedCategory: 'all',
       selectedPrice: 'all',
       sortBy: 'featured',
+      showSubscriptionModal: false,
+      isProcessingSubscription: false,
+      subscriptionInfo: {
+        cardNumber: '',
+        expiryDate: '',
+        cvv: '',
+        cardName: ''
+      },
       products: [
         {
           id: '1',
@@ -224,6 +351,82 @@ export default {
       
       return filtered;
     }
+  },
+  methods: {
+    subscribeToPlan() {
+      this.showSubscriptionModal = true;
+    },
+    closeSubscriptionModal() {
+      this.showSubscriptionModal = false;
+      this.isProcessingSubscription = false;
+      // Reset form
+      this.subscriptionInfo = {
+        cardNumber: '',
+        expiryDate: '',
+        cvv: '',
+        cardName: ''
+      };
+    },
+    formatCardNumberSub() {
+      // Remove all non-digit characters
+      let value = this.subscriptionInfo.cardNumber.replace(/\D/g, '');
+      
+      // Add space every 4 digits
+      if (value.length > 4) {
+        value = value.match(/.{1,4}/g).join(' ');
+      }
+      
+      this.subscriptionInfo.cardNumber = value;
+    },
+    formatExpiryDateSub() {
+      // Remove all non-digit characters
+      let value = this.subscriptionInfo.expiryDate.replace(/\D/g, '');
+      
+      // Add slash after 2 digits
+      if (value.length > 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      
+      this.subscriptionInfo.expiryDate = value;
+    },
+    processSubscription() {
+      // Basic validation
+      if (!this.subscriptionInfo.cardNumber || !this.subscriptionInfo.expiryDate || 
+          !this.subscriptionInfo.cvv || !this.subscriptionInfo.cardName) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      // Validate card number (simple validation)
+      const cardNumber = this.subscriptionInfo.cardNumber.replace(/\s/g, '');
+      if (cardNumber.length < 16) {
+        alert('Please enter a valid card number');
+        return;
+      }
+      
+      // Validate expiry date
+      const [month, year] = this.subscriptionInfo.expiryDate.split('/');
+      if (!month || !year || month > 12) {
+        alert('Please enter a valid expiry date');
+        return;
+      }
+      
+      // Validate CVV
+      if (this.subscriptionInfo.cvv.length < 3) {
+        alert('Please enter a valid CVV');
+        return;
+      }
+      
+      // Process subscription
+      this.isProcessingSubscription = true;
+      
+      // Simulate subscription processing
+      setTimeout(() => {
+        this.isProcessingSubscription = false;
+        alert('Subscription successful! You now have premium access to early product notifications and exclusive features.');
+        this.closeSubscriptionModal();
+      }, 2000);
+    }
   }
 }
 </script>
@@ -327,6 +530,245 @@ export default {
   margin-bottom: 0.5rem;
 }
 
+/* Subscription Section */
+.subscription-section {
+  padding: 5rem 0;
+  background-color: var(--gray-50);
+  text-align: center;
+}
+
+.subscription-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.subscription-content h2 {
+  margin-bottom: 1rem;
+}
+
+.subscription-content p {
+  margin-bottom: 2rem;
+  color: var(--gray-700);
+}
+
+.subscription-plan {
+  border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  background: white;
+  box-shadow: var(--box-shadow);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.plan-header {
+  margin-bottom: 1.5rem;
+}
+
+.plan-header h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--dark-color);
+  font-size: 1.5rem;
+}
+
+.plan-price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.plan-price span {
+  font-size: 1rem;
+  color: var(--gray-600);
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.plan-features li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.plan-features li:last-child {
+  border-bottom: none;
+}
+
+.plan-features li i {
+  color: var(--primary-color);
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  background-color: white;
+  margin: auto;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.subscription-modal h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--dark-color);
+  font-size: 1.75rem;
+}
+
+.close {
+  position: absolute;
+  right: 1.5rem;
+  top: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--gray-500);
+  z-index: 10;
+}
+
+.close:hover {
+  color: var(--dark-color);
+}
+
+.subscription-summary {
+  border-bottom: 1px solid var(--gray-300);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.subscription-details h3 {
+  margin-bottom: 0.5rem;
+  color: var(--dark-color);
+  font-size: 1.25rem;
+}
+
+.subscription-details .price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.subscription-details .price span {
+  font-size: 1rem;
+  color: var(--gray-600);
+}
+
+.payment-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.payment-form .form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.payment-form .half-width {
+  flex: 1;
+  min-width: 200px;
+}
+
+.payment-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-500);
+  z-index: 2;
+}
+
+.payment-form input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  transition: var(--transition);
+  box-sizing: border-box;
+}
+
+.payment-form input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 0, 110, 0.2);
+}
+
+.total-amount {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1.5rem 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--gray-300);
+}
+
+.amount {
+  color: var(--primary-color);
+}
+
+.btn-block {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
   .products-grid {
@@ -392,6 +834,46 @@ export default {
   .certification {
     padding: 1rem;
   }
+  
+  .subscription-section {
+    padding: 3rem 0;
+  }
+  
+  .subscription-plan {
+    padding: 1.5rem;
+  }
+  
+  .plan-price {
+    font-size: 2rem;
+  }
+  
+  .modal {
+    padding: 15px;
+  }
+  
+  .modal-content {
+    padding: 1.5rem;
+  }
+  
+  .subscription-modal h2 {
+    font-size: 1.5rem;
+  }
+  
+  .payment-form .half-width {
+    min-width: 100%;
+  }
+  
+  .input-with-icon input {
+    padding: 12px 15px 12px 40px;
+  }
+  
+  .subscription-details .price {
+    font-size: 1.25rem;
+  }
+  
+  .total-amount {
+    font-size: 1.1rem;
+  }
 }
 
 @media (max-width: 576px) {
@@ -417,6 +899,14 @@ export default {
   .filter-group select {
     width: 100%;
   }
+  
+  .subscription-content {
+    padding: 0 1rem;
+  }
+  
+  .subscription-plan {
+    padding: 1rem;
+  }
 }
 
 /* Extra small devices (phones, less than 480px) */
@@ -432,5 +922,32 @@ export default {
   .cert-icon {
     font-size: 2rem;
   }
+  
+  .modal {
+    padding: 10px;
+  }
+  
+  .modal-content {
+    padding: 1.25rem;
+  }
+  
+  .subscription-modal h2 {
+    font-size: 1.3rem;
+  }
+  
+  .close {
+    right: 1rem;
+    top: 0.75rem;
+    font-size: 1.5rem;
+  }
+  
+  .subscription-details h3 {
+    font-size: 1.1rem;
+  }
+  
+  .plan-price {
+    font-size: 1.5rem;
+  }
 }
 </style>
+```

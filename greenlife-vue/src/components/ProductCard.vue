@@ -1,7 +1,30 @@
 <template>
   <div class="product-card">
     <div class="product-image">
-      <img :src="product.image" :alt="product.name">
+      <!-- Carousel for product images -->
+      <div class="carousel">
+        <div class="carousel-container" :style="{ transform: `translateX(${currentSlide * -33.333}%)` }">
+          <!-- Cortis logo image -->
+          <div class="carousel-slide">
+            <div class="image-container">
+              <img :src="product.image" :alt="`${product.name} - Logo`" class="carousel-image">
+            </div>
+          </div>
+          <!-- Product demo image -->
+          <div class="carousel-slide">
+            <div class="image-container">
+              <img src="../assets/products/product-demo.jpg" :alt="`${product.name} - Product View`" class="carousel-image">
+            </div>
+          </div>
+          <!-- Size chart image -->
+          <div class="carousel-slide">
+            <div class="image-container">
+              <img src="../assets/products/size-chart.png" :alt="`${product.name} - Size Chart`" class="carousel-image">
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <div class="product-overlay">
         <button class="btn btn-primary" @click="initiatePurchase">
           <i class="fas fa-credit-card"></i> Buy Now
@@ -14,6 +37,32 @@
         </button>
       </div>
     </div>
+    
+    <!-- Carousel Navigation Buttons -->
+    <div class="carousel-controls">
+      <button 
+        class="control-btn" 
+        :class="{ active: currentSlide === 0 }"
+        @click="goToSlide(0)"
+      >
+        <i class="fas fa-image"></i> Logo
+      </button>
+      <button 
+        class="control-btn" 
+        :class="{ active: currentSlide === 1 }"
+        @click="goToSlide(1)"
+      >
+        <i class="fas fa-tshirt"></i> Product
+      </button>
+      <button 
+        class="control-btn" 
+        :class="{ active: currentSlide === 2 }"
+        @click="goToSlide(2)"
+      >
+        <i class="fas fa-ruler-combined"></i> Size Chart
+      </button>
+    </div>
+    
     <div class="product-info">
       <h3>
         <i class="fab fa-npm"></i> {{ product.name }}
@@ -147,6 +196,7 @@ export default {
   },
   data() {
     return {
+      currentSlide: 0, // Start with the first slide (Cortis logo)
       showPaymentModal: false,
       isProcessing: false,
       paymentInfo: {
@@ -158,6 +208,9 @@ export default {
     }
   },
   methods: {
+    goToSlide(index) {
+      this.currentSlide = index;
+    },
     initiatePurchase() {
       this.showPaymentModal = true;
     },
@@ -286,15 +339,78 @@ export default {
   overflow: hidden;
 }
 
-.product-image img {
+/* Carousel Styles */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.carousel-container {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  width: calc(100% / 3);
+  height: 100%;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: calc(100% / 3);
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: var(--transition);
+  object-position: center;
 }
 
-.product-card:hover .product-image img {
-  transform: scale(1.05);
+/* Carousel Controls */
+.carousel-controls {
+  display: flex;
+  border-top: 1px solid var(--gray-200);
+}
+
+.control-btn {
+  flex: 1;
+  padding: 12px 0;
+  background: white;
+  border: none;
+  border-right: 1px solid var(--gray-200);
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--gray-600);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.control-btn:last-child {
+  border-right: none;
+}
+
+.control-btn:hover {
+  background: var(--gray-100);
+}
+
+.control-btn.active {
+  background: var(--primary-color);
+  color: white;
 }
 
 .product-overlay {
@@ -548,6 +664,11 @@ export default {
   .total-amount {
     font-size: 1.1rem;
   }
+  
+  .control-btn {
+    padding: 10px 0;
+    font-size: 0.85rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -571,6 +692,15 @@ export default {
   
   .product-details h3 {
     font-size: 1.1rem;
+  }
+  
+  .control-btn {
+    padding: 8px 0;
+    font-size: 0.75rem;
+  }
+  
+  .control-btn i {
+    font-size: 0.75rem;
   }
 }
 </style>
