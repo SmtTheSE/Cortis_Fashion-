@@ -41,3 +41,9 @@ Or from the root directory:
 ```bash
 npm run build
 ```
+
+## Important Notes
+
+1. The `node_modules` directories are excluded from the repository via `.gitignore` files
+2. Netlify will perform a clean install using `npm ci` to avoid platform-specific binary issues
+3. Make sure to commit any changes to `package-lock.json` files when dependencies are updated
