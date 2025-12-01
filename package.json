@@ -1,0 +1,12 @@
+{
+  "name": "fashion-ecommerce-project",
+  "version": "1.0.0",
+  "description": "Fashion! - Cortis Style Fashion E-commerce Project",
+  "scripts": {
+    "build": "cd greenlife-vue && npm run build",
+    "dev": "cd greenlife-vue && npm run dev"
+  },
+  "keywords": ["vue", "fashion", "cortis", "korean-fashion", "ecommerce"],
+  "author": "Sitt Min Thar",
+  "license": "MIT"
+}

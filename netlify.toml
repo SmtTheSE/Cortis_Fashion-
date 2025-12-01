@@ -1,0 +1,6 @@
+[build]
+  command = "cd greenlife-vue && npm run build"
+  publish = "greenlife-vue/dist"
+
+[build.environment]
+  NODE_VERSION = "18"
